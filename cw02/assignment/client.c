@@ -9,6 +9,7 @@ int main() {
     int inputs_size = 4;
     int inputs[] = {6, 19, 27, 837799}; 
     int max_iter = 300;
+
     #ifdef DYNAMIC
         void *handle = dlopen("./libcollatz.so", RTLD_LAZY);
         if (!handle) {
@@ -28,8 +29,8 @@ int main() {
         int input = inputs[i];
         int steps[max_iter];
         printf("Input number: %d\n", input);
+
         int output = test_collatz_convergence(input, max_iter, steps);
-        
         if (output == 0) {
             printf("Collatz sequence did not converge within %d iterations.\n", max_iter);
             return 1;
