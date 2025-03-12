@@ -4,4 +4,4 @@ This repository contains notes, code, and exercises for the **Operating Systems*
 
 ## Notes (in Polish)
 
-[Notes](./Notes/Notes.md)
+### [Notes](./Notes/Notes.md)
