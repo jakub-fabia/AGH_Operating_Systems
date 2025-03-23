@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O2 -std=c17 -g
+CFLAGS = -Wall -O2 -std=c17
 
 readCompare: readCompare.c
 	$(CC) $(CFLAGS) -o readCompare readCompare.c
