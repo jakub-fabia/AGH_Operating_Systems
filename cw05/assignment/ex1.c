@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <string.h>
 #include <unistd.h>
 #include <signal.h>
+#include <string.h>
 
 void handler() {
-    printf("To jest komunikat z handler na SIGUSR1\n");
+    printf("SIGUSR1 handler message!\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -35,9 +35,9 @@ int main(int argc, char *argv[]) {
         sigset_t pending_signals;
         sigpending(&pending_signals);
         if (sigismember(&pending_signals, SIGUSR1)) {
-            printf("Sygnał SIGUSR1 jest oczekujący.\n");
+            printf("SIGUSR1 is waiting.\n");
         } else {
-            printf("Sygnał SIGUSR1 nie jest oczekujący.\n");
+            printf("SIGUSR1 is not waiting.\n");
         }
     }
     return 0;
