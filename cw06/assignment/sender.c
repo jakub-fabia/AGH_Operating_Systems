@@ -12,9 +12,9 @@ int main() {
     mkfifo(fifo_out, 0666);
 
     double a, b;
-    printf("Podaj przedział całkowania [a b]: ");
+    printf("Input integration area [a b]: ");
     if (scanf("%lf %lf", &a, &b) != 2) {
-        fprintf(stderr, "Błąd: nieprawidłowe dane wejściowe\n");
+        fprintf(stderr, "Error: Invalid entry data\n");
         return 1;
     }
 
@@ -42,7 +42,7 @@ int main() {
     }
 
     close(fd_out);
-    printf("Wynik całki w przedziale [%.6f, %.6f] = %.17f\n", a, b, result);
+    printf("Integration result [%.6f, %.6f] = %.17f\n", a, b, result);
 
     unlink(fifo_in);
     unlink(fifo_out);

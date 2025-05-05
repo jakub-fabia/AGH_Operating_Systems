@@ -18,7 +18,7 @@ double rectangle_area(double start, double end, double dx) {
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "Użycie: %s <dx> <n>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <dx> <n>\n", argv[0]);
         return 1;
     }
 
@@ -45,8 +45,7 @@ int main(int argc, char *argv[]) {
                 perror("fork");
                 exit(1);
             } else if (pids[i] == 0) {
-                // Proces potomny
-                close(pipes[i][0]); // zamykamy odczyt
+                close(pipes[i][0]);
                 double a = i * step;
                 double b = (i + 1) * step;
                 double result = rectangle_area(a, b, dx);
@@ -54,12 +53,10 @@ int main(int argc, char *argv[]) {
                 close(pipes[i][1]);
                 exit(0);
             } else {
-                // Proces macierzysty
-                close(pipes[i][1]); // zamykamy zapis
+                close(pipes[i][1]);
             }
         }
 
-        // Proces macierzysty czeka i zbiera wyniki
         double total = 0.0;
         for (int i = 0; i < k; ++i) {
             double partial = 0.0;
@@ -73,7 +70,7 @@ int main(int argc, char *argv[]) {
         double time_taken = (end.tv_sec - start.tv_sec) + 
                             (end.tv_usec - start.tv_usec) / 1e6;
 
-        printf("k = %d, wynik = %.12f, czas = %.4f s\n", k, total, time_taken);
+        printf("k = %d, result = %.12f, time = %.4f s\n", k, total, time_taken);
     }
 
     return 0;
