@@ -35,15 +35,6 @@ void signal_handler(int sig) {
     exit(0);
 }
 
-void send_to_client(char* message, int client_id) {
-    pthread_mutex_lock(&clients_mutex);
-    if (client_id >= 0 && client_id < MAX_CLIENTS && clients[client_id].active) {
-        sendto(server_socket, message, strlen(message), 0, 
-               (struct sockaddr*)&clients[client_id].addr, clients[client_id].addr_len);
-    }
-    pthread_mutex_unlock(&clients_mutex);
-}
-
 void broadcast_message(char* message, int sender_id) {
     pthread_mutex_lock(&clients_mutex);
     for (int i = 0; i < MAX_CLIENTS; i++) {
@@ -51,6 +42,15 @@ void broadcast_message(char* message, int sender_id) {
             sendto(server_socket, message, strlen(message), 0, 
                    (struct sockaddr*)&clients[i].addr, clients[i].addr_len);
         }
+    }
+    pthread_mutex_unlock(&clients_mutex);
+}
+
+void send_to_client(char* message, int client_id) {
+    pthread_mutex_lock(&clients_mutex);
+    if (client_id >= 0 && client_id < MAX_CLIENTS && clients[client_id].active) {
+        sendto(server_socket, message, strlen(message), 0, 
+               (struct sockaddr*)&clients[client_id].addr, clients[client_id].addr_len);
     }
     pthread_mutex_unlock(&clients_mutex);
 }
@@ -236,7 +236,7 @@ void handle_message(char* buffer, struct sockaddr_in* client_addr, socklen_t add
             }
         }
     }
-    else if (strncmp(buffer, "STOP", 4) == 0) {
+    else if (strncmp(buffer, "QUIT", 4) == 0) {
         strcpy(response, "OK: Do widzenia");
         sendto(server_socket, response, strlen(response), 0, 
                (struct sockaddr*)client_addr, addr_len);

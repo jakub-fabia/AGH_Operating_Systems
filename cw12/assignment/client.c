@@ -19,7 +19,7 @@ socklen_t server_len = sizeof(server_addr);
 
 void signal_handler(int sig) {
     printf("\nWylogowywanie z serwera...\n");
-    char stop_msg[] = "STOP";
+    char stop_msg[] = "QUIT";
     sendto(client_socket, stop_msg, strlen(stop_msg), 0, 
            (struct sockaddr*)&server_addr, server_len);
     running = 0;
@@ -183,7 +183,7 @@ int main(int argc, char* argv[]) {
         }
         
         if (strcmp(input, "QUIT") == 0) {
-            char stop_msg[] = "STOP";
+            char stop_msg[] = "QUIT";
             sendto(client_socket, stop_msg, strlen(stop_msg), 0, 
                    (struct sockaddr*)&server_addr, server_len);
             break;
